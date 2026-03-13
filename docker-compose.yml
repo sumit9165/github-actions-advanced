@@ -1,0 +1,5 @@
+services:
+  web:
+    image: ${DOCKERHUB_USERNAME}/my-flask-app:latest
+    ports:
+      - "80:80"
