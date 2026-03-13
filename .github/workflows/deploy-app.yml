@@ -24,7 +24,7 @@ jobs:
 
             - name: Deploy with docker compose
               run: |
-                    apt-get update && apt-get install -y docker docker-compose-v2
+                    sudo apt-get update && sudo apt-get install -y docker.io docker-compose-v2
                     sudo usermod -aG docker $USER
                     newgrp docker
                     docker compose down -v &&docker compose up -d --build --force-recreate --pull always
