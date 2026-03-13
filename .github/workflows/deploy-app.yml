@@ -23,5 +23,9 @@ jobs:
               uses: docker/setup-compose-action@v2
 
             - name: Deploy with docker compose
-              run: docker compose down -v &&docker compose up -d --build --force-recreate --pull always
+              run: |
+                    apt-get update && apt-get install -y docker docker-compose-v2
+                    sudo usermod -aG docker $USER
+                    newgrp docker
+                    docker compose down -v &&docker compose up -d --build --force-recreate --pull always
                 
