@@ -6,9 +6,15 @@ on:
 jobs: 
     deploy:
         runs-on: ubuntu-latest
+        env:
+            DOCKERHUB_USERNAME: ${{ vars.DOCKERHUB_USERNAME }}
+            DOCKER_TAG: ${{ github.event.workflow_run.head_sha }}
         steps:
             - name: Checkout code
               uses: actions/checkout@v4
+
+            - name: set docker tag environment variable
+              run: echo "DOCKER_TAG=${{ github.event.workflow_run.head_sha }}" >> $GITHUB_ENV
 
             - name: SSh to server
               uses: appleboy/ssh-action@v1.0.3
@@ -43,5 +49,6 @@ jobs:
                     echo ${{ secrets.DOCKERHUB_TOKEN }} | docker login -u ${{ vars.DOCKERHUB_USERNAME }} --password-stdin
                     export DOCKERHUB_USERNAME=${{ vars.DOCKERHUB_USERNAME }}
                     export DOCKER_TAG=${{ github.sha }}
+                    echo $DOCKER_TAG
                     sudo chmod 666 /var/run/docker.sock
                     cd devops && docker compose down -v &&docker compose up -d --build --force-recreate --pull always
