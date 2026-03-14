@@ -18,7 +18,7 @@ jobs:
                 key: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
                 script: |
                     echo "Starting deployment..."
-                    mkdir devops
+                    mkdir -p devops
 
             - name: Copy docker compose file
               uses: appleboy/scp-action@v0.1.3
@@ -26,8 +26,8 @@ jobs:
                 host: ${{ secrets.EC2_SSH_HOST }}
                 username: ${{ secrets.EC2_SSH_USER }}
                 key: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
-                source: "docker-compose.yml"
-                target: "~/devops/docker-compose.yml"
+                source: docker-compose.yml
+                target: ~/devops
                 
             - name: SSh to server
               uses: appleboy/ssh-action@v1.0.3
