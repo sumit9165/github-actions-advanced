@@ -1,5 +1,5 @@
 services:
   web:
-    image: ${DOCKERHUB_USERNAME}/my-flask-app:latest
+    image: ${DOCKERHUB_USERNAME}/my-flask-app:${ github.sha }
     ports:
       - "80:80"
